@@ -130,5 +130,7 @@ Once the server is running, open your web browser and go to:
 http://localhost:5000
 ```
 This will open the login page where you can authenticate and start chatting!
-
+![index page](https://github.com/Subhamkonar84/online_chatting_application/blob/main/index.png)
+![login page](https://github.com/Subhamkonar84/online_chatting_application/blob/main/login.png)
+![chat page](https://github.com/Subhamkonar84/online_chatting_application/blob/main/chat.png)
 
