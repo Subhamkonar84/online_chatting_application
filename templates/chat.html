@@ -1,0 +1,295 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SubhsApp</title>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/4.0.1/socket.io.js"></script>
+    <style>
+        /* Reset */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: Arial, sans-serif;
+        }
+
+        body, html {
+            height: 100%;
+            background-color: #e9ecef;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        /* Chat Container */
+        .chat-container {
+            display: flex;
+            flex-direction: column;
+            width: 100vw;
+            height: 100vh;
+            background: rgba(255, 255, 255, 0.9);
+            box-shadow: 0px 4px 12px rgba(0, 0, 0, 0.1);
+            border-radius: 0;
+            overflow: hidden;
+            position: fixed;
+            top: 0;
+            left: 0;
+            z-index: 1000;
+        }
+
+        /* Header */
+        .chat-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 15px 20px;
+            background-color: #007bff;
+            color: white;
+            font-size: 1.2em;
+            font-weight: bold;
+        }
+
+        .chat-header .user-info {
+            display: flex;
+            align-items: center;
+        }
+
+        .chat-header .username {
+            margin-right: 15px;
+        }
+
+        .chat-header .logout-btn {
+            text-decoration: none;
+            color: white;
+            padding: 8px 12px;
+            background-color: #f44336;
+            border-radius: 5px;
+            font-size: 0.9em;
+            transition: background-color 0.3s;
+        }
+
+        .chat-header .logout-btn:hover {
+            background-color: #d32f2f;
+        }
+
+        /* Messages Section */
+        .messages {
+            flex-grow: 1;
+            padding: 20px;
+            overflow-y: auto;
+            background-color: #f9f9f9;
+            display: flex;
+            flex-direction: column;
+            margin-bottom: 60px; /* Add margin to prevent the input box from overlapping */
+        }
+
+        /* Message styling */
+        .message {
+            max-width: 70%;
+            margin: 10px;
+            padding: 10px 15px;
+            border-radius: 15px;
+            position: relative;
+            word-wrap: break-word;
+            line-height: 1.4;
+            font-size: 0.9em;
+            display: inline-block;
+        }
+
+        /* Messages sent by you - aligned to the right */
+        .message.sent {
+            background-color: #7bb7f8;
+            color: #ffffff;
+            align-self: flex-end;
+            border-top-right-radius: 0;
+            margin-right: 10px;
+            max-width: 80%;
+        }
+
+        /* Messages received from others - aligned to the left */
+        .message.received {
+            background-color: #e0e0e0;
+            color: #333333;
+            align-self: flex-start;
+            border-top-left-radius: 0;
+            margin-left: 10px;
+            max-width: 80%;
+        }
+
+        .message .user-name {
+            font-size: 0.85em;
+            font-weight: bold;
+            color: #333333;
+        }
+
+        .timestamp {
+            font-size: 0.75em;
+            color: #666;
+            text-align: right;
+            margin-top: 5px;
+            display: block;
+        }
+
+        /* Message Input */
+        .message-form {
+            display: flex;
+            align-items: center;
+            padding: 15px;
+            background: #ffffff;
+            border-top: 1px solid #ddd;
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 100%;
+        }
+
+        .message-input {
+            flex-grow: 1;
+            padding: 10px 15px;
+            border: 1px solid #ddd;
+            border-radius: 20px;
+            font-size: 1em;
+            transition: border-color 0.3s;
+        }
+
+        .message-input:focus {
+            outline: none;
+            border-color: #007bff;
+        }
+
+        .send-button {
+            padding: 10px 20px;
+            margin-left: 10px;
+            font-size: 1em;
+            color: #fff;
+            background-color: #007bff;
+            border: none;
+            border-radius: 20px;
+            cursor: pointer;
+            transition: background-color 0.3s;
+        }
+
+        .send-button:hover {
+            background-color: #43a047;
+        }
+
+        /* Mobile-friendly layout */
+        @media (max-width: 768px) {
+            .chat-container {
+                width: 100vw;
+                height: 100vh;
+            }
+
+            .messages {
+                padding: 10px;
+                margin-bottom: 100px; /* Ensure the message area doesn't get overlapped by the input */
+            }
+
+            .message-form {
+                padding: 10px;
+                position: fixed;
+                bottom: 0;
+                left: 0;
+                width: 100%;
+                background-color: #ffffff;
+                border-top: 1px solid #ddd;
+            }
+
+            .message-input {
+                padding: 10px;
+                font-size: 1.1em;
+            }
+
+            .send-button {
+                padding: 10px 15px;
+                font-size: 1.1em;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="chat-container">
+        <div class="chat-header">
+            <span class="header-title">SubsApp</span>
+            <div class="user-info">
+                <span class="username">{{ session['username'] }}</span>
+                <a href="{{ url_for('logout') }}" class="logout-btn">Logout</a>
+            </div>
+        </div>
+
+        <div class="messages" id="chat"></div>
+
+        <div class="message-form">
+            <input id="message" class="message-input" placeholder="Type your message here" required>
+            <button id="sendButton" onclick="sendMessage()" class="send-button">Send</button>
+        </div>
+    </div>
+
+    <script>
+        document.getElementById('message').addEventListener('keypress', function(event) {
+            if (event.key === 'Enter') {
+                event.preventDefault(); // Prevents newline insertion
+                sendMessage();
+            }
+        });
+
+        const socket = io();
+
+        // Send message function
+        function sendMessage() {
+            const message = document.getElementById('message').value;
+            if (message.trim() === "") {
+                alert("Please enter a message before sending.");
+                return;
+            }
+            socket.emit('send_message', { message: message });
+            document.getElementById('message').value = '';
+        }
+
+        // Receive message function
+        socket.on('receive_message', function(data) {
+            const chat = document.getElementById('chat');
+            const formattedTimestamp = formatTimestamp(data.timestamp);
+            const messageHtml = `
+                <div class="message ${data.username === "{{ session['username'] }}" ? 'sent' : 'received'}">
+                    <span class="user-name">${data.username}</span>
+                    <p>${data.message}</p>
+                    <span class="timestamp">${formattedTimestamp}</span>
+                </div>
+            `;
+            chat.innerHTML += messageHtml;
+            chat.scrollTop = chat.scrollHeight;
+        });
+
+        // Load chat history
+        socket.emit('get_history');
+
+        // Receive chat history
+        socket.on('chat_history', function(data) {
+            const chat = document.getElementById('chat');
+            data.forEach(function(msg) {
+                const formattedTimestamp = formatTimestamp(msg.timestamp);
+                const messageHtml = `
+                    <div class="message ${msg.username === "{{ session['username'] }}" ? 'sent' : 'received'}">
+                        <span class="user-name">${msg.username}</span>
+                        <p>${msg.message}</p>
+                        <span class="timestamp">${formattedTimestamp}</span>
+                    </div>
+                `;
+                chat.innerHTML += messageHtml;
+            });
+            chat.scrollTop = chat.scrollHeight;
+        });
+
+        function formatTimestamp(timestamp) {
+            const date = new Date(timestamp);
+            const dateOptions = { month: '2-digit', day: '2-digit', year: 'numeric' };
+            const timeOptions = { hour: '2-digit', minute: '2-digit', hour12: true };
+            const formattedDate = date.toLocaleDateString([], dateOptions);
+            const formattedTime = date.toLocaleTimeString([], timeOptions);
+            return `${formattedDate}, ${formattedTime}`;
+        }
+    </script>
+</body>
+</html>

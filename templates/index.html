@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ShubsApp</title>
+    <style>
+        /* Reset default margins and paddings */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        /* Body styling with gradient background */
+        body {
+            font-family: 'Helvetica Neue', Arial, sans-serif;
+            color: #333;
+            background: linear-gradient(to bottom, #5B9BD5, #2176E0);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            overflow: hidden;
+            flex-direction: column;
+        }
+
+        /* Container styling with shadow and hover effect */
+        .container {
+            text-align: center;
+            padding: 40px;
+            background-color: rgba(255, 255, 255, 0.95);
+            border-radius: 10px;
+            box-shadow: 0px 8px 20px rgba(0, 0, 0, 0.3);
+            max-width: 400px;
+            width: 90%;
+            transition: transform 0.3s ease;
+            margin-top: 20px;
+        }
+        
+        .container:hover {
+            transform: scale(1.03);
+        }
+
+        /* Main heading styling */
+        h1 {
+            font-size: 2.8em;
+            margin-bottom: 15px;
+            color: #333;
+            font-weight: bold;
+            letter-spacing: 2px;
+        }
+
+        /* Subheadings styling */
+        .subheading, .subheading-1 {
+            font-size: 1.1em;
+            color: #555;
+            font-weight: 300;
+            margin-bottom: 10px;
+        }
+
+        /* Button styling with gradient and shadow */
+        .button {
+            display: inline-block;
+            margin: 10px;
+            padding: 12px 28px;
+            font-size: 1.1em;
+            color: #fff;
+            background: linear-gradient(to right, #0066cc, #0052a3);
+            border: none;
+            border-radius: 5px;
+            text-decoration: none;
+            box-shadow: 0px 4px 10px rgba(0, 123, 255, 0.2);
+            transition: all 0.3s ease;
+            font-weight: 500;
+            cursor: pointer;
+        }
+
+        .button:hover {
+            background-color: #0056b3;
+            box-shadow: 0px 6px 12px rgba(0, 86, 179, 0.3);
+            transform: translateY(-2px);
+        }
+
+        /* Footer styling */
+        .footer {
+            margin-top: 30px;
+            font-size: 0.9em;
+            color: #888;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>SubsApp</h1>
+        <p class="subheading-1">Welcome to SubsApp!</p>
+        <p class="subheading">Please log in or register to continue.</p>
+        <a href="{{ url_for('log_in') }}" class="button">Login</a>
+        <a href="{{ url_for('register') }}" class="button">Register</a>
+        <p class="footer">© 2024 SubsApp. All rights reserved.</p>
+    </div>
+</body>
+</html>
