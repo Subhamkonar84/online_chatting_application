@@ -50,20 +50,20 @@ Log in to your MySQL server using the `mysql` command-line client or your prefer
 ```bash
 mysql -u root -p
 ```
-Enter your MySQL root password when prompted.
+- Enter your MySQL root password when prompted.
 
 ### Step 2: Create the Database
-Once you are logged in, create a new database called messages:
+- Once you are logged in, create a new database called messages:
 
 ```sql
 CREATE DATABASE messages CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;
 ```
-This command creates a database named messages with the utf8mb4 character set, which supports emojis and other multi-byte characters.
+- This command creates a database named messages with the utf8mb4 character set, which supports emojis and other multi-byte characters.
 
 ### Step 3: Create Tables
-Now, switch to the newly created database:
+- Now, switch to the newly created database:
 
-``` sql
+```sql
 USE messages;
 ```
 Create messages Table
@@ -86,8 +86,8 @@ CREATE TABLE user (
   password VARCHAR(255) NOT NULL
 ) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;
 ```
-username: The username of the user (unique and serves as the primary key).
-password: The hashed password for the user.
+- **username**: The username of the user (unique and serves as the primary key).
+- **password**: The hashed password for the user.
 ###Step 4: Exit MySQL
 Once both tables are created, exit the MySQL client:
 
@@ -95,20 +95,21 @@ Once both tables are created, exit the MySQL client:
 EXIT;
 ```
 ### Step 4: Check If All Libraries Are Installed
-Before running the application, make sure you have all the necessary libraries installed. You can check and install the required Python libraries by following these steps:
 
-Install Dependencies:
+- Before running the application, make sure you have all the necessary libraries installed. You can check and install the required Python libraries by following these steps:
+
+**Install Dependencies**:
 
 Ensure that the following libraries are installed on your local system:
 
-Flask: Web framework for Python
-Flask-SocketIO: Real-time messaging via WebSocket
-mysql-connector-python: MySQL database connector for Python
+- **Flask**: Web framework for Python
+- **Flask-SocketIO**: Real-time messaging via WebSocket
+- **mysql-connector-python**: MySQL database connector for Python
 
 ### Step 5: Run the Flask Application
 Once the configuration is complete and the required libraries are installed, you can run the Flask application:
 
-Run the Server:
+- **Run the Server**:
 
 Use the following command to start the Flask application:
 
@@ -121,7 +122,7 @@ Or, if you are using Python 3:
 python3 main.py
 ```
 
-Access the Application:
+- **Access the Application**:
 
 Once the server is running, open your web browser and go to:
 
