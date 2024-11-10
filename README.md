@@ -29,6 +29,16 @@ Before setting up the server, make sure you have the following installed:
 - **Web browser** (for accessing the web application)
 
 ## Setting Up the Server
+### Clone the Repository
+Start by cloning the repository to your local machine.
+
+``` bash
+git clone https://github.com/your-username/chatting-application.git
+```
+``` bash
+cd chatting-application
+```
+
 ## Setting Up the MySQL Database
 
 Follow the steps below to set up the MySQL database for your application:
@@ -53,12 +63,12 @@ This command creates a database named messages with the utf8mb4 character set, w
 ### Step 3: Create Tables
 Now, switch to the newly created database:
 
-```sql
+``` sql
 USE messages;
+```
 Create messages Table
 Create a table to store the chat messages with the following columns: id, username, message, and timestamp:
-```
-```sql
+``` sql
 CREATE TABLE messages (
   id INT AUTO_INCREMENT PRIMARY KEY,
   username VARCHAR(255) NOT NULL,
@@ -66,11 +76,11 @@ CREATE TABLE messages (
   timestamp TIMESTAMP DEFAULT CURRENT_TIMESTAMP
 ) CHARACTER SET utf
 ```
-```sql
+``` sql
 Create user Table
 Create a table to store user credentials with the columns: username and password:
 ```
-```sql
+``` sql
 CREATE TABLE user (
   username VARCHAR(255) PRIMARY KEY,
   password VARCHAR(255) NOT NULL
@@ -81,7 +91,7 @@ password: The hashed password for the user.
 ###Step 4: Exit MySQL
 Once both tables are created, exit the MySQL client:
 
-```sql
+``` sql
 EXIT;
 ```
 ### Step 4: Check If All Libraries Are Installed
@@ -102,12 +112,12 @@ Run the Server:
 
 Use the following command to start the Flask application:
 
-```bash
+``` bash
 python main.py
 ```
 Or, if you are using Python 3:
 
-```bash
+``` bash
 python3 main.py
 ```
 
@@ -115,7 +125,7 @@ Access the Application:
 
 Once the server is running, open your web browser and go to:
 
-```link
+``` link
 http://localhost:5000
 ```
 This will open the login page where you can authenticate and start chatting!
