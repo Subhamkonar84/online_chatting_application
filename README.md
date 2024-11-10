@@ -21,9 +21,11 @@ Once the server is set up, the application can be accessed globally, enabling us
 
 Before setting up the server, make sure you have the following installed:
 
-- **Node.js** (for the server-side application)
-- **npm** (Node Package Manager)
-- **MongoDB** (or another database for user and chat storage)
+- **Python 3.x** (for the backend)
+- **Flask** (for the web framework)
+- **Flask-SocketIO** (for WebSocket support)
+- **Mysql** (or another database for user and chat storage)
+- **pip** (Python's package installer)
 - **Web browser** (for accessing the web application)
 
 ## Setting Up the Server
