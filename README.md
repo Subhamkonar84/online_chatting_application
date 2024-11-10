@@ -42,7 +42,7 @@ mysql -u root -p
 ```
 Enter your MySQL root password when prompted.
 
-###Step 2: Create the Database
+### Step 2: Create the Database
 Once you are logged in, create a new database called messages:
 
 ```sql
@@ -50,7 +50,7 @@ CREATE DATABASE messages CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;
 ```
 This command creates a database named messages with the utf8mb4 character set, which supports emojis and other multi-byte characters.
 
-###Step 3: Create Tables
+### Step 3: Create Tables
 Now, switch to the newly created database:
 
 ```sql
@@ -84,7 +84,7 @@ Once both tables are created, exit the MySQL client:
 ```sql
 EXIT;
 ```
-##Step 4: Check If All Libraries Are Installed
+### Step 4: Check If All Libraries Are Installed
 Before running the application, make sure you have all the necessary libraries installed. You can check and install the required Python libraries by following these steps:
 
 Install Dependencies:
@@ -95,7 +95,7 @@ Flask: Web framework for Python
 Flask-SocketIO: Real-time messaging via WebSocket
 mysql-connector-python: MySQL database connector for Python
 
-##Step 5: Run the Flask Application
+### Step 5: Run the Flask Application
 Once the configuration is complete and the required libraries are installed, you can run the Flask application:
 
 Run the Server:
